@@ -7,10 +7,8 @@ public class Level {
 	private int rows = 20;
 	private int tileWidth = 40;
 	private int tileHeight = 20;
-	private int originX = 8;
-	private int originY = 8;
-	private int tileScaleX = 1;
-	private int tileScaleY = 1;
+	private int originX = 9;
+	private int originY = 9;
 	private BufferedImage[] tiles;
 	private BufferedImage hiSquare;
 	private int[] grid;
@@ -54,23 +52,20 @@ public class Level {
 		int mouseX = game.getMouseX();
 		int mouseY = game.getMouseY();
 		
-//		
-//		int tileX = mouseX / tileWidth;
-//		int tileY = mouseY / tileHeight;
-		
 		if (scrolling) {
-			if (mouseX > mouseStartX) {
+			if (mouseX > mouseStartX && panX < rows/2) {
 				panX++;
-			} else if (mouseX < mouseStartX) {
+			} else if (mouseX < mouseStartX && panX >= -rows/2) {
 				panX--;
 			}
 			
-			if (mouseY > mouseStartY) {
+			if (mouseY > mouseStartY && panY < cols/2) {
 				panY++;
-			} else if (mouseY < mouseStartY) {
+			} else if (mouseY < mouseStartY && panY >= -cols/2) {
 				panY--;
 			}
 		}
+		
 		mouseStartX = mouseX;
 		mouseStartY = mouseY;
 	}
@@ -147,21 +142,27 @@ public class Level {
 				selectedX += 1;	
 			}
 			
-			if (selectedX >= 0 && selectedY >= 0 && selectedX < rows && selectedY < cols) {
+			int scrolledSelectedX = selectedX + panX + panY;
+			int scrolledSelectedY = selectedY - panX + panY;
+			
+			if (scrolledSelectedX >= 0 && scrolledSelectedY >= 0
+					&& scrolledSelectedX < rows && scrolledSelectedY < cols) {
 				
 				renderer.render(tiles[1], highlightedX, highlightedY);
 				
-				if (click && grid[(selectedY + panY) * rows + (selectedX + panX)] != selectedTile 
+				if (click && grid[(scrolledSelectedY) * rows + (scrolledSelectedX)] != selectedTile 
 						&& player.getMoney() > 0) {
 					
-					grid[(selectedY + panY) * rows + (selectedX + panX)] = selectedTile;
-					player.takeMoney(100);
-					
+					grid[(scrolledSelectedY) * rows + scrolledSelectedX] = selectedTile;
+					//player.takeMoney(100);
+
+
 				} else if (remove) {
 					
-					if (grid[(selectedY + panY) * rows + (selectedX + panX)] != 0) {
-						grid[(selectedY + panY) * rows + (selectedX + panX)] = 0;
+					if (grid[(scrolledSelectedY) * rows + (scrolledSelectedX)] != 0) {
+						grid[(scrolledSelectedY) * rows + (scrolledSelectedX)] = 0;
 						player.giveMoney(100);
+
 					}
 				}
 			}

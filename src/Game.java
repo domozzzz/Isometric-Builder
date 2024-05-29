@@ -14,7 +14,7 @@ public class Game extends Canvas implements Runnable {
 	public static int SCREEN_HEIGHT = 600;
 	public static int SCREEN_WIDTH = 800;
 	
-	private int FPS = 60;
+	private int FPS = 35;
 	private boolean running = false;
 	private int[] pixels;
 	private BufferedImage displayImage;
