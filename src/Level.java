@@ -190,7 +190,6 @@ public class Level {
 			}
 		}
 		renderer.render(hiSquare, selectedTile*tileWidth, 29*tileHeight);
-		System.out.println(player.getMoney());
 	}
 
 	public void up() {
