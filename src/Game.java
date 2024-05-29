@@ -106,7 +106,7 @@ public class Game extends Canvas implements Runnable {
 		Game game = new Game();
 		JFrame frame = new JFrame();
 		
-		frame.setTitle("blubbzy");
+		frame.setTitle("Isometric Builder");
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.add(game);
